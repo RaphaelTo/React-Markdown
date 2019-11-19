@@ -2,18 +2,17 @@ import React, { Component } from 'react';
 import './App.css';
 import {sampleText} from './sampleText'
 import Marked from 'marked'
-import Purify from 'dompurify';
+import DOMPurify from 'dompurify';
 
 class App extends Component {
   
   state = {contenu: sampleText}
-  //oldLocalStorage = localStorage.setItem('mark', this.state.contenu)
 
   onChange = (event) => {
     this.setState({contenu : event.target.value})
     
   }
-
+  
   componentDidMount = () => {
     if(localStorage.getItem('mark') == null) {
       localStorage.setItem('mark', this.state.contenu)
@@ -24,12 +23,12 @@ class App extends Component {
     if(localStorage.getItem('mark')){
       this.setState({contenu: localStorage.getItem('mark')})
     }
-      document.getElementById('mark').innerHTML = Purify.sanitize(Marked(localStorage.getItem('mark')))
+      document.getElementById('mark').innerHTML = DOMPurify.sanitize(Marked(localStorage.getItem('mark')))
   }
 
   componentDidUpdate = () => {
       localStorage.setItem('mark',this.state.contenu)
-      document.getElementById('mark').innerHTML = Purify.sanitize(Marked(localStorage.getItem('mark')))
+      document.getElementById('mark').innerHTML = DOMPurify.sanitize(Marked(localStorage.getItem('mark')))
   }
 
   render() {
